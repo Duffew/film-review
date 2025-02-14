@@ -27,6 +27,9 @@ class Review(models.Model):
     # Add a status field to help manage draft vs published reviews
     # This will require a STATUS constant defined above
     status = models.IntegerField(choices=STATUS, default=0)
+    # Add an optional exceprt field to allow readers to see the start of a
+    # review on the list page
+    excerpt = models.TextField(blank=True)
 
 
     # Add a Meta class to order the film reviews by most recent first when
