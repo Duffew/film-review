@@ -40,6 +40,42 @@ class Review(models.Model):
     # Add a string method to detail how Review instances should be displayed
     def __str__(self):
         return f"{self.film_title} | Reviewed by {self.author}"
+    
+
+# Create a Comments model to manage comments on the film reviews
+class Comment(models.Model):
+    # Create a many-to-one relationship to the Review model that deletes if
+    # the film review is deleted
+    review = models.ForeignKey(Review, on_delete=models.CASCADE, 
+                               related_name="comments")
+    # Reference the User model for the author of the comment
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    # Capture the content of the comment using Charfield to create 
+    # a 300 character limit per comment
+    content = models.CharField(max_length=300)
+    # Add an approved field to enable Site Admin to approve the comment
+    approved = models.BooleanField(default=False)
+    # Add a field to automatically capture the date and time 
+    # the comment was created
+    created_on = models.DateTimeField(auto_now_add=True)
+    # Add a field for tracking the number of upvotes a comment has received
+    upvotes = models.IntegerField(default=0)
+    # Add a field for tracking the number of downvotes a comment has received
+    downvotes = models.IntegerField(default=0)
+    # Create a self-referential foreign key to enable threaded comments
+    parent = models.ForeignKey('self', null=True, blank=True, 
+                               related_name='replies', on_delete=models.CASCADE)
+
+    
+    # Add metadata to enable comments to show in order of oldest first
+    # by default.
+    class Meta:
+        ordering = ["created_on"]
+
+    
+    # Add a string method to define how the comment should read as a string. 
+    def __str__(self):
+        return f"{self.author} wrote: {self.content}"
 
 
 
