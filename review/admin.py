@@ -9,7 +9,7 @@ from django_summernote.admin import SummernoteModelAdmin
 class ReviewAdmin(SummernoteModelAdmin):
     list_display = ('film_title', 'slug', 'author', 'status')
     search_fields = ['film_title']
-    list_filter = ('status',)
+    list_filter = ('status', 'author')
     prepopulated_fields = {'slug': ('film_title',)}
     summernote_fields = ('content',)
     ordering = ('-created_on',)
