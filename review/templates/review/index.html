@@ -1,4 +1,9 @@
 <!-- initial code copied from CI Django Blog walkthrough -->
+
+<!-- 
+identify index.html as a child of base.html with the following 
+template inheritance tag 
+-->
 {% extends "base.html" %}
 
 {% block content %}
@@ -7,9 +12,15 @@
 <div class="container-fluid">
     <div class="row">
 
-        <!-- Blog Entries Column -->
+        <!-- Review Entries Column -->
         <div class="col-12 mt-3 left">
             <div class="row">
+                <!-- 
+                for loop iterating reviews over a list of reviews. 
+                By using queryset in a ListView in views.py, Django 
+                automatically passes the queryset into the template context 
+                with the generic name object_list 
+                -->
                 {% for review in review_list %}
                 <div class="col-md-4">
                     <div class="card mb-4">
@@ -21,6 +32,8 @@
                             </div>
                             <a href="#" class="post-link">
                                 <h2 class="card-title">{{ review.film_title }}</h2>
+                                <!-- Mark excerpts as safe -->
+                                <p class="card-text">{{ review.excerpt|safe }}</p>
                             </a>
 
                             <hr />
@@ -29,6 +42,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- define the number of columns for reveiws as 3 -->
                 {% if forloop.counter|divisibleby:3 %}
             </div>
             <div class="row">
@@ -41,6 +55,14 @@
     {% if is_paginated %}
     <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
+            <!-- add conditional statement for displaying 'previous' button -->
+            {% if page_obj.has_previous %}
+            <li>
+                <a href="?page={{ page_obj.previous_page_number }}"
+                  class="page-link">&laquo; PREV</a>
+            </li>
+            {% endif %}
+            <!-- add conditional statement for displaying 'next' button -->
             {% if page_obj.has_next %}
             <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
             {% endif %}

@@ -10,4 +10,4 @@ class ReviewList(generic.ListView):
     queryset = Review.objects.all().order_by("-created_on")
     # Specify the html template to be used for rendering the view
     template_name = "review/index.html"
-    paginate_by = 12
+    paginate_by = 6
