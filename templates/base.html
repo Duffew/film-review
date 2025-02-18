@@ -61,7 +61,7 @@ account-related actions: login, signup, and logout.
                             href="#">Home</a>
                         </li>
                     <!-- initial code for login logout and signup from CI blog walkthrough -->
-                     <!-- define a condtional for autenticated users -->
+                    <!-- define a condtional for autenticated users -->
                     {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == logout_url %}active{% endif %}" aria-current="page"
