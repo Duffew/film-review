@@ -2,8 +2,18 @@
 
 <!-- load the static directory -->
 {% load static %}
-
+<!-- Generate a URL for the 'home' view -->
 {% url 'home' as home_url %}
+<!-- 
+Generate URLs for the specified views and store them in template variables.
+These variables can be used within the template to create links for 
+account-related actions: login, signup, and logout. 
+-->
+{% url 'account_login' as login_url %}
+{% url 'account_signup' as signup_url %}
+{% url 'account_logout' as logout_url %}
+
+
 
 <!DOCTYPE html>
 <html class="h-100" lang="en">
@@ -49,7 +59,25 @@
                         -->
                         <a class="nav-link {% if request.path == home_url %}active{% endif %}" aria-current="page"
                             href="#">Home</a>
+                        </li>
+                    <!-- initial code for login logout and signup from CI blog walkthrough -->
+                     <!-- define a condtional for autenticated users -->
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == logout_url %}active{% endif %}" aria-current="page"
+                            href="{% url 'account_logout' %}">Logout</a>
                     </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == signup_url %}active{% endif %}" aria-current="page"
+                            href="{% url 'account_signup' %}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == login_url %}active{% endif %}" aria-current="page"
+                            href="{% url 'account_login' %}">Login</a>
+                    </li>
+                    {% endif %}
+
 
                 </ul>
                 <span class="navbar-text text-muted">

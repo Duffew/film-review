@@ -10,11 +10,11 @@ class ReviewList(generic.ListView):
     queryset = Review.objects.all().order_by("-created_on")
     # Specify the html template to be used for rendering the view
     template_name = "review/index.html"
-    paginate_by = 6
+    paginate_by = 9
 
 
-# Define the view function for displaying the details of a single review with 
-# the following parameters:
+# Define a function-based view for displaying the details of a single 
+# review with the following parameters:
 # - request: The current HttpRequest object containing all the information 
 # about the client's request
 # - slug: A unique identifier used to retrieve the specific review object 
@@ -35,15 +35,17 @@ def review_detail(request, slug):
 
     # Create a QuerySet of Review objects that have a status of 1 (published)
     queryset = Review.objects.filter(status=1)
-    # Get a single Review object from the QuerySet using the slug, 
+    # Get a single Review object from the QuerySet using the review slug, 
     # or return a 404 error if the object does not exist
     review = get_object_or_404(queryset, slug=slug)
+    # The path to the template to be rendered
+    path = "review/review_detail.html"
+    # Context dictionary containing the review object
+    context = {"review": review}
 
     # Render the 'review_detail.html' template with the given context
-    # The context dictionary contains a single key 'review' which maps to 
-    # the review object 
     return render(
         request,  # The current HttpRequest object
-        "review/review_detail.html",  # The path to the template to be rendered
-        {"review": review},  # Context dictionary containing the review object
+        path,  # The path to the template to be rendered
+        context  # The context dictionary containing the review object
     )

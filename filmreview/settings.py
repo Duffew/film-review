@@ -30,7 +30,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
 
@@ -44,9 +44,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # allauth
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # summernote
     'django_summernote',
+    # my apps
     'review',
 ]
+
+# The ID of the current site in the Django sites framework
+SITE_ID = 1
+# The URL to redirect to after a user successfully logs in
+LOGIN_REDIRECT_URL = '/'
+# The URL to redirect to after a user logs out
+LOGOUT_REDIRECT_URL = '/'
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -59,6 +75,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Middleware for handling account-related functionality in Django Allauth.
+    # This middleware ensures the proper management of account-related 
+    # tasks such as login, logout, account creation, etc.
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 
@@ -128,6 +148,11 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+# Disable email verification for user accounts in Django Allauth.
+# This setting allows users to sign up and log in without verifying their 
+# email address.
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 
 # Internationalization
