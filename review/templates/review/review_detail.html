@@ -1,0 +1,37 @@
+<!-- initial code borrowed from CI Django blog walkthrough -->
+
+{% extends 'base.html' %} {% block content %}
+{% load static %}
+
+<div class="masthead">
+    <div class="container">
+        <div class="row g-0">
+            <div class="col-md-6 masthead-text">
+                <!-- review film_title goes in these h1 tags -->
+                <h1 class="review-title">{{ review.film_review }}</h1>
+                <!-- review author goes before the | the review's created date goes after -->
+                <p class="review-subtitle">{{ review.author }} | {{ review.created_on }}</p>
+            </div>
+            <div class="d-none d-md-block col-md-6 masthead-image">
+                <img src="{% static 'images/film_camera.jpg' %}" class="scale" alt="placeholder">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col card mb-4  mt-3 left  top">
+            <div class="card-body">
+                <!-- The review content goes inside the card-text. -->
+                <!-- Use the | safe filter inside the template tags to mark the 
+                 html as safe to render -->
+                <p class="card-text">
+                    {{ review.content | safe }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

@@ -30,7 +30,8 @@ template inheritance tag
                                     <p class="author">Author: {{ review.author }}</p>
                                 </div>
                             </div>
-                            <a href="#" class="post-link">
+                            <!-- Point the anchor to the review_detail view -->
+                            <a href="{% url 'review_detail' review.slug %}" class="post-link">
                                 <h2 class="card-title">{{ review.film_title }}</h2>
                                 <!-- Mark excerpts as safe -->
                                 <p class="card-text">{{ review.excerpt|safe }}</p>
