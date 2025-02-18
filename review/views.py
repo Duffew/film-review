@@ -40,8 +40,18 @@ def review_detail(request, slug):
     review = get_object_or_404(queryset, slug=slug)
     # The path to the template to be rendered
     path = "review/review_detail.html"
-    # Context dictionary containing the review object
-    context = {"review": review}
+    # Retrieve and order all comments associated with the review, 
+    # sorting them by the most recently created
+    comments = review.comments.all().order_by("-created_on")
+    # Count the number of approved comments associated with the review
+    comment_count = review.comments.filter(approved=True).count()
+    # Context dictionary containing review, comments and comment_count objects
+    context = {
+        "review": review,
+        "comments": comments,
+        "comment_count": comment_count
+        }
+
 
     # Render the 'review_detail.html' template with the given context
     return render(
