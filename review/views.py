@@ -16,6 +16,11 @@ class ReviewList(generic.ListView):
     paginate_by = 9
 
 
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from .models import Review, Comment
+from .forms import CommentForm
+
 # Define a function-based view for displaying the details of a single 
 # review with the following parameters:
 # - request: The current HttpRequest object containing all the information 
@@ -45,7 +50,9 @@ def review_detail(request, slug):
     path = "review/review_detail.html"
     # Retrieve and order all comments associated with the review, 
     # sorting them by the most recently created
-    comments = review.comments.all().order_by("-created_on")
+    all_comments = review.comments.all().order_by("-created_on")
+    # Filter to include only top-level comments (those without a parent)
+    comments = all_comments.filter(parent__isnull=True)
     # Count the number of approved comments associated with the review
     comment_count = review.comments.filter(approved=True).count()
     
@@ -61,6 +68,10 @@ def review_detail(request, slug):
             comment.author = request.user
             # Associate the comment with the current review
             comment.review = review
+            # 
+            if 'parent' in request.POST:
+                parent_id = request.POST.get('parent')
+                comment.parent_id = parent_id if parent_id else None
             # Save the comment to the database
             comment.save()
             # Add a message to the messages framework
@@ -78,7 +89,7 @@ def review_detail(request, slug):
     # comment_form objects
     context = {
         "review": review,
-        "comments": comments,
+        "comments": comments,  # Pass only top-level comments to the template
         "comment_count": comment_count,
         "comment_form": comment_form,
         }
@@ -90,3 +101,5 @@ def review_detail(request, slug):
         path,  # The path to the template to be rendered
         context  # The context dictionary containing the review object
     )
+
+

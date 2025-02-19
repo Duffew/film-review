@@ -1,0 +1,54 @@
+<!-- 
+This template is designed to handle the display and nesting of comments 
+in a modular and reusable way. In particular, the comments.html template allows 
+for recursive inclusion, meaning it can include itself to handle nested 
+comments. This is essential for displaying threads within threads.
+comments.html is a partial template designed to be included within the 
+review_detail.html template and, therefore, does not require its own URL path.
+-->
+{% load static %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+<!-- Displaying Comments -->
+{% for comment in comments %}
+<div class="p-2 comments
+{% if not comment.approved and comment.author == user %}
+faded{% elif not comment.approved %} d-none{% endif %}">
+    <p class="font-weight-bold">
+        {{ comment.author }}
+        <span class="font-weight-normal">
+            {{ comment.created_on|naturaltime }}
+        </span> wrote:
+    </p>
+    <div id="comment{{ comment.id }}">
+        {{ comment.content | linebreaks }}
+    </div>
+    {% if not comment.approved and comment.author == user %}
+    <p class="approval">
+        This comment is awaiting approval
+    </p>
+    {% endif %}
+    <!-- Add a reply button -->
+    <a class="reply-btn" href="#comment-form" data-parent="{{ comment.id }}">Reply</a>
+    <!-- Hidden nested comment form template -->
+    <div class="nested-comment-form" style="display: none;">
+        {% if user.is_authenticated %}
+        <form method="post">
+            {{ comment_form.as_p }}
+            {% csrf_token %}
+            <input type="hidden" name="parent" class="parent-id"> <!-- Hidden input field for parent ID -->
+            <button type="submit" class="btn btn-signup btn-sm">Submit</button>
+        </form>
+        {% else %}
+        <p>Log in to leave a comment</p>
+        {% endif %}
+    </div>
+    <!-- 
+    Recursively include child comments using the comments.html template 
+    within review_detail.html
+    -->
+    {% include "review/comments.html" with comments=comment.replies.all %}
+
+</div>
+{% endfor %}

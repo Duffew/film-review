@@ -1,9 +1,12 @@
 <!-- initial code borrowed from CI Django blog walkthrough -->
 
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+
+{% block content %}
 {% load static %}
 <!-- crispy forms -->
 {% load crispy_forms_tags %}
+{% load humanize %}  <!-- Load humanize tags -->
 
 <div class="masthead">
     <div class="container">
@@ -23,7 +26,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col card mb-4  mt-3 left  top">
+        <div class="col card mb-4 mt-3 left  top">
             <div class="card-body">
                 <!-- The review content goes inside the card-text. -->
                 <!-- Use the | safe filter inside the template tags to mark the 
@@ -48,44 +51,24 @@
     </div>
     <!-- Displaying Comments -->
     <div class="row">
-        <div class="col-md-8 card mb-4  mt-3 ">
+        <div class="col-md-8 card mb-4 mt-3">
             <h3>Comments:</h3>
             <div class="card-body">
-                <!-- We want a for loop inside the empty control tags
-              to iterate through each comment in comments -->
-                {% for comment in comments %}
-                <div class="p-2 comments
-              {% if not comment.approved and comment.author == user %}
-              faded{% elif not comment.approved %} d-none{% endif %}">
-                    <p class="font-weight-bold">
-                        {{ comment.author }}
-                        <span class="font-weight-normal">
-                            {{ comment.created_on }}
-                        </span> wrote:
-                    </p>
-                    <div id="comment{{ comment.id }}">
-                        {{ comment.content | linebreaks }}
-                    </div>
-                    {% if not comment.approved and comment.author == user %}
-                    <p class="approval">
-                        This comment is awaiting approval
-                    </p>
-                    {% endif %}
-                </div>
-                <!-- Our for loop ends here -->
-                {% endfor %}
+                <!-- Include top-level comments (those without a parent) -->
+                {% include "review/comments.html" with comments=comments %}
             </div>
         </div>
-        <!-- crispy form - initial code from CI Django Blog Walkthrough-->
+        <!-- crispy form - initial code from CI Django Blog Walkthrough -->
         <!-- Creating New Comments -->
         <div class="col-md-4 card mb-4 mt-3">
             <div class="card-body">
                 {% if user.is_authenticated %}
                 <h3>Leave a comment:</h3>
                 <p>Posting as: {{ user.username }}</p>
-                <form id="commentForm" method="post" style="margin-top: 1.3em;">
+                <form id="comment-form" method="post" style="margin-top: 1.3em;">
                     {{ comment_form | crispy }}
                     {% csrf_token %}
+                    <input type="hidden" name="parent" id="parent-id">
                     <button id="submitButton" type="submit" class="btn btn-signup btn-lg">Submit</button>
                 </form>
                 {% else %}
@@ -93,7 +76,7 @@
                 {% endif %}
             </div>
         </div>
-
     </div>
 </div>
+
 {% endblock content %}
