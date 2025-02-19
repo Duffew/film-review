@@ -50,9 +50,8 @@ class Comment(models.Model):
                                related_name="comments")
     # Reference the User model for the author of the comment
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    # Capture the content of the comment using Charfield to create 
-    # a 300 character limit per comment
-    content = models.CharField(max_length=300)
+    # Capture the content of the comment using TextField
+    content = models.TextField()
     # Add an approved field to enable Site Admin to approve the comment
     approved = models.BooleanField(default=False)
     # Add a field to automatically capture the date and time 

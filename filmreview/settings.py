@@ -30,7 +30,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
 
@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    # crispy forms
+    'crispy_forms',
+    'crispy_bootstrap5',
     # summernote
     'django_summernote',
     # my apps
@@ -62,6 +65,9 @@ LOGIN_REDIRECT_URL = '/'
 # The URL to redirect to after a user logs out
 LOGOUT_REDIRECT_URL = '/'
 
+# Set bootstrap5 as the allowed template pack and as the default template pack 
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 
 MIDDLEWARE = [

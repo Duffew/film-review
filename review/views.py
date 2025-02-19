@@ -1,6 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from .models import Review
+from .forms import CommentForm
+# Import the messages framework from Django's contrib package
+from django.contrib import messages
 
 # Create your views here.
 
@@ -45,11 +48,39 @@ def review_detail(request, slug):
     comments = review.comments.all().order_by("-created_on")
     # Count the number of approved comments associated with the review
     comment_count = review.comments.filter(approved=True).count()
-    # Context dictionary containing review, comments and comment_count objects
+    
+    # Check if the request method is POST
+    if request.method == "POST":
+        # Create an instance of CommentForm with the POST data
+        comment_form = CommentForm(data=request.POST)
+        # Check if the form data is valid
+        if comment_form.is_valid():
+            # Create a comment object but do not save it to the database yet
+            comment = comment_form.save(commit=False)
+            # Set the author of the comment to the current user
+            comment.author = request.user
+            # Associate the comment with the current review
+            comment.review = review
+            # Save the comment to the database
+            comment.save()
+            # Add a message to the messages framework
+            messages.add_message(
+                request,  # The current HttpRequest object
+                messages.SUCCESS,  # The level of the message (SUCCESS in this case)
+                'Comment submitted and awaiting approval'  # The message text to be displayed to the user
+                )
+
+   
+    # Create an instance of the CommentForm class to handle user input 
+    # for the Comment model 
+    comment_form = CommentForm()
+    # Context dictionary containing review, comments, comment_count and 
+    # comment_form objects
     context = {
         "review": review,
         "comments": comments,
-        "comment_count": comment_count
+        "comment_count": comment_count,
+        "comment_form": comment_form,
         }
 
 
