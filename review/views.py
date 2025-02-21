@@ -1,9 +1,17 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
-from .models import Review
+from .models import Review, Comment
 from .forms import CommentForm
 # Import the messages framework from Django's contrib package
 from django.contrib import messages
+
+# Imports required for up and downvoting comments
+# Import JsonResponse to send JSON responses from views
+from django.http import JsonResponse
+# Import require_POST to restrict view to POST requests only
+from django.views.decorators.http import require_POST
+# Import login_required to restrict view to authenticated users only
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -15,11 +23,6 @@ class ReviewList(generic.ListView):
     template_name = "review/index.html"
     paginate_by = 9
 
-
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib import messages
-from .models import Review, Comment
-from .forms import CommentForm
 
 # Define a function-based view for displaying the details of a single 
 # review with the following parameters:
@@ -102,4 +105,28 @@ def review_detail(request, slug):
         context  # The context dictionary containing the review object
     )
 
+
+@require_POST  # Ensure the view only handles POST requests
+@login_required  # Ensure the user is authenticated before accessing the view
+def upvote_comment(request, comment_id):
+    # Retrieve the comment object by its ID, or return a 404 error if not found
+    comment = get_object_or_404(Comment, id=comment_id)
+    # Increment the upvotes count for the comment
+    comment.upvotes += 1
+    # Save the updated comment object to the database
+    comment.save()
+    # Return a JSON response with the updated upvotes count
+    return JsonResponse({'upvotes': comment.upvotes})
+
+@require_POST  # Ensure the view only handles POST requests
+@login_required  # Ensure the user is authenticated before accessing the view
+def downvote_comment(request, comment_id):
+    # Retrieve the comment object by its ID, or return a 404 error if not found
+    comment = get_object_or_404(Comment, id=comment_id)
+    # Increment the downvotes count for the comment
+    comment.downvotes += 1
+    # Save the updated comment object to the database
+    comment.save()
+    # Return a JSON response with the updated downvotes count
+    return JsonResponse({'downvotes': comment.downvotes})
 

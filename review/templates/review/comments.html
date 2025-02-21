@@ -29,6 +29,13 @@ faded{% elif not comment.approved %} d-none{% endif %}">
         This comment is awaiting approval
     </p>
     {% endif %}
+
+    <!-- Like and Dislike buttons -->
+    <div class="comment-votes">
+        <button class="btn btn-like" data-comment-id="{{ comment.id }}">Like ({{ comment.upvotes }})</button>
+        <button class="btn btn-dislike" data-comment-id="{{ comment.id }}">Dislike ({{ comment.downvotes }})</button>
+    </div>
+
     <!-- Add a reply button -->
     <a class="reply-btn" href="#comment-form" data-parent="{{ comment.id }}">Reply</a>
     <!-- Hidden nested comment form template -->
