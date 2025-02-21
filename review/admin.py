@@ -13,7 +13,7 @@ from django_summernote.admin import SummernoteModelAdmin
 # Define a class that takes imported SummernoteModelAdmin as a parameter
 class ReviewAdmin(SummernoteModelAdmin):
     # Define how the list of film reviews displays
-    list_display = ('film_title', 'slug', 'author', 'status', 'created_on')
+    list_display = ('film_title', 'slug', 'author', 'created_on', 'status')
     # Add a search field to find films by title
     search_fields = ['film_title']
     # Add quick filters to narrow searches by status, author and date created
@@ -28,6 +28,16 @@ class ReviewAdmin(SummernoteModelAdmin):
     ordering = ('-created_on',)
 
 
-# Register your models here.
-# Register the Comment model to enable review management from the admin panel
-admin.site.register(Comment)
+# Define and register a class to tailor how the admin panel displays.
+# Use @admin.register decorator to register the class
+@admin.register(Comment)
+# Define a class that takes imported SummernoteModelAdmin as a parameter
+class CommentAdmin(SummernoteModelAdmin):
+    # Define the list of how the comments display in the panel
+    list_display = ('content', 'author', 'created_on', 'approved')
+    # Define the quick filters to narrow searches by approved, author and
+    # when created
+    list_filter = ('approved', 'author', 'created_on')
+    # Display the list of comments by most recent first
+    ordering = ('-created_on',)
+
