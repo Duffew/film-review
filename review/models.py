@@ -1,6 +1,8 @@
+# Import models from django.db to define database schema
 from django.db import models
 # Import the User model from Django's built-in authentication framework
 from django.contrib.auth.models import User
+
 
 STATUS = ((0, "Draft"), (1, "Published"))
 # Create your models here.

@@ -1,17 +1,30 @@
-from django.shortcuts import render, get_object_or_404
-from django.views import generic
-from .models import Review, Comment
-from .forms import CommentForm
-# Import the messages framework from Django's contrib package
-from django.contrib import messages
+# Standard library imports
+# (none in this example, but place them here if any)
 
-# Imports required for up and downvoting comments
-# Import JsonResponse to send JSON responses from views
-from django.http import JsonResponse
+# Third-party imports
+# Import render to render templates
+# Import get_object_or_404 to retrieve objects or return 404 error if not found
+from django.shortcuts import render, get_object_or_404
+# Import reverse to reverse URL patterns
+from django.urls import reverse
+# Import generic for class-based views
+from django.views import generic
+# Import messages to display messages to users
+from django.contrib import messages
+# Import JsonResponse to send JSON responses from views - up and down votes
+# Import HttpResponseRedirect to enable URL redirects - editing and deleting
+from django.http import JsonResponse, HttpResponseRedirect
 # Import require_POST to restrict view to POST requests only
 from django.views.decorators.http import require_POST
 # Import login_required to restrict view to authenticated users only
 from django.contrib.auth.decorators import login_required
+
+# Local application-specific imports
+# Import models required for views
+from .models import Review, Comment
+# Import forms required for views
+from .forms import CommentForm
+
 
 # Create your views here.
 
@@ -71,17 +84,21 @@ def review_detail(request, slug):
             comment.author = request.user
             # Associate the comment with the current review
             comment.review = review
-            # 
+            # Check if the 'parent' key is present in the POST data indicating
+            # a thread
             if 'parent' in request.POST:
+                # Retrieve the parent ID from the POST data
                 parent_id = request.POST.get('parent')
+                # Set the parent_id of the comment if it exists, 
+                # otherwise set it to None
                 comment.parent_id = parent_id if parent_id else None
             # Save the comment to the database
             comment.save()
             # Add a message to the messages framework
             messages.add_message(
                 request,  # The current HttpRequest object
-                messages.SUCCESS,  # The level of the message (SUCCESS in this case)
-                'Comment submitted and awaiting approval'  # The message text to be displayed to the user
+                messages.SUCCESS,  # Level of the message (SUCCESS in this case)
+                'Comment submitted and awaiting approval'  # The message text 
                 )
 
    
@@ -130,3 +147,81 @@ def downvote_comment(request, comment_id):
     # Return a JSON response with the updated downvotes count
     return JsonResponse({'downvotes': comment.downvotes})
 
+
+# Ensure that the user is authenticated before accessing this view
+@login_required
+def edit_comment(request, slug, comment_id):
+    """
+    View to handle the editing of a comment.
+
+    **Parameters:**
+
+    ``request``: HttpRequest object
+        The current HttpRequest object containing all the information about 
+        the client's request.
+
+    ``slug``: str
+        The slug of the review to which the comment belongs.
+
+    ``comment_id``: int
+        The ID of the comment to be edited.
+
+    **Context:**
+
+    ``form``: CommentForm
+        An instance of CommentForm used to display and validate the form data.
+
+    **Template:**
+
+    :template:`review/edit_comment.html`
+
+    **Redirects:**
+
+    Redirects to the review detail page after the comment is 
+    successfully edited.
+    """
+    # Get the comment object to be edited or return a 404 error if not found
+    comment = get_object_or_404(Comment, id=comment_id, author=request.user)
+
+    # Check if the request method is POST
+    if request.method == "POST":
+        # Create an instance of CommentForm with the POST data and the existing 
+        # comment instance
+        form = CommentForm(request.POST, instance=comment)
+        # Check if the form data is valid
+        if form.is_valid():
+            # Save the edited comment to the database, setting approval to False
+            edited_comment = form.save(commit=False)
+            edited_comment.approved = False
+            edited_comment.save()
+            # Add a success message to the messages framework
+            messages.add_message(
+                request,  # The current HttpRequest object
+                messages.SUCCESS,  # Level of the message (SUCCESS in this case)
+                'Comment updated successfully and is awaiting approval'
+            )
+            # Redirect to the review detail page of the associated review 
+            # using the slug
+            return HttpResponseRedirect(reverse('review_detail', kwargs={
+                'slug': slug}))
+    else:
+        # Create an instance of CommentForm with the existing comment 
+        # instance for GET request
+        form = CommentForm(instance=comment)
+
+    # Path to the template to be rendered
+    path = 'review/edit_comment.html'
+    
+    # Context dictionary containing the form object
+    context = {
+        "form": form,
+        "slug": slug,
+        "comment": comment,
+    }
+
+    # Render the 'edit_comment.html' template with the given context
+    return render(
+        request,  # The current HttpRequest object
+        path,  # The path to the template to be rendered
+        context  # The context dictionary containing the form object
+    )

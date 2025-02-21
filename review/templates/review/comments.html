@@ -21,9 +21,14 @@ faded{% elif not comment.approved %} d-none{% endif %}">
             {{ comment.created_on|naturaltime }}
         </span> wrote:
     </p>
+
     <div id="comment{{ comment.id }}">
         {{ comment.content | linebreaks }}
     </div>
+    <!-- Only show the edit button if the current user is the author of the comment -->
+    {% if comment.author == user %}
+    <a href="{% url 'edit_comment' slug=comment.review.slug comment_id=comment.id %}" class="btn btn-edit">Edit</a>
+    {% endif %}
     {% if not comment.approved and comment.author == user %}
     <p class="approval">
         This comment is awaiting approval
