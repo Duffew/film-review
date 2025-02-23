@@ -4,7 +4,7 @@
 # Third-party imports
 # Import render to render templates
 # Import get_object_or_404 to retrieve objects or return 404 error if not found
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 # Import reverse to reverse URL patterns
 from django.urls import reverse
 # Import generic for class-based views
@@ -200,3 +200,51 @@ def edit_comment(request, slug, comment_id):
         path,  # The path to the template to be rendered
         context  # The context dictionary containing the form object
     )
+
+
+@login_required
+def delete_comment(request, slug, comment_id):
+    """
+    View to handle the deletion of a comment.
+
+    **Parameters:**
+
+    ``request``: HttpRequest object
+        The current HttpRequest object containing all the information about 
+        the client's request.
+
+    ``slug``: str
+        The slug of the review to which the comment belongs.
+
+    ``comment_id``: int
+        The ID of the comment to be deleted.
+
+    **Redirects:**
+
+    Redirects to the review detail page after the comment is 
+    successfully deleted.
+    """
+    # Get the comment object to be deleted or return a 404 error if not found
+    comment = get_object_or_404(Comment, id=comment_id, author=request.user)
+
+    # Check if the request method is POST
+    if request.method == "POST":
+        # Delete the comment from the database
+        comment.delete()
+        path = 'review/confirm_delete_comment.html'
+        # Add a success message to the messages framework
+        messages.add_message(
+            request,  # The current HttpRequest object
+            messages.SUCCESS,  # Level of the message (SUCCESS in this case)
+            'Comment deleted successfully'
+        )
+        # Redirect to the review detail page of the associated review 
+        # using the slug referenced in the kwargs dictionary
+        return redirect(reverse('review_detail', kwargs={'slug': slug}))
+
+    # If the request method is not POST, render the confirmation page
+    context = {
+        "slug": slug,
+        "comment": comment,
+    }
+    return render(request, path, context)
