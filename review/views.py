@@ -30,10 +30,11 @@ from .forms import CommentForm
 
 class ReviewList(generic.ListView):
     # Define the queryset as 'all objects' in the Review model shown in order
-    # of newest first
-    queryset = Review.objects.all().order_by("-created_on")
+    # of newest first and only published (status=1) reviews
+    queryset = Review.objects.filter(status=1).order_by("-created_on")
     # Specify the html template to be used for rendering the view
     template_name = "review/index.html"
+    # Show a list of no more than 9 reviews
     paginate_by = 9
 
 
@@ -123,32 +124,6 @@ def review_detail(request, slug):
     )
 
 
-@require_POST  # Ensure the view only handles POST requests
-@login_required  # Ensure the user is authenticated before accessing the view
-def upvote_comment(request, comment_id):
-    # Retrieve the comment object by its ID, or return a 404 error if not found
-    comment = get_object_or_404(Comment, id=comment_id)
-    # Increment the upvotes count for the comment
-    comment.upvotes += 1
-    # Save the updated comment object to the database
-    comment.save()
-    # Return a JSON response with the updated upvotes count
-    return JsonResponse({'upvotes': comment.upvotes})
-
-@require_POST  # Ensure the view only handles POST requests
-@login_required  # Ensure the user is authenticated before accessing the view
-def downvote_comment(request, comment_id):
-    # Retrieve the comment object by its ID, or return a 404 error if not found
-    comment = get_object_or_404(Comment, id=comment_id)
-    # Increment the downvotes count for the comment
-    comment.downvotes += 1
-    # Save the updated comment object to the database
-    comment.save()
-    # Return a JSON response with the updated downvotes count
-    return JsonResponse({'downvotes': comment.downvotes})
-
-
-# Ensure that the user is authenticated before accessing this view
 @login_required
 def edit_comment(request, slug, comment_id):
     """
@@ -201,7 +176,7 @@ def edit_comment(request, slug, comment_id):
                 'Comment updated successfully and is awaiting approval'
             )
             # Redirect to the review detail page of the associated review 
-            # using the slug
+            # using the slug referenced in the kwargs dictionary
             return HttpResponseRedirect(reverse('review_detail', kwargs={
                 'slug': slug}))
     else:
