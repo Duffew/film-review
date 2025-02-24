@@ -1,11 +1,8 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit Comment</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
+
+{% block content %}
+
 <body>
     <div class="container">
         <h1>Edit Comment</h1>
@@ -19,4 +16,5 @@
         <a href="{% url 'review_detail' slug=slug %}" class="btn btn-secondary">Cancel</a>  
     </div>
 </body>
-</html>
+
+{% endblock %}

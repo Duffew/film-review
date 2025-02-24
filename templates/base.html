@@ -1,4 +1,3 @@
-
 <!-- load the static directory -->
 {% load static %}
 <!-- Generate a URL for the 'home' view -->
@@ -37,14 +36,19 @@ See below
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 
 </head>
 
-<body class="d-flex flex-column h-100 main-bg">
+<!-- 
+ - Set Flexbox for layout, 
+ - arrange child elements in a vertical column,
+ - ensure that the body takes up 100% of viewport height
+-->
+<body class="d-flex flex-column h-100">
 
     <!-- Navigation -->
     <!-- navbar expands on large screens (smaller screens use a hamburger toggle) -->
@@ -90,7 +94,7 @@ See below
                     <li class="nav-item">
                         <!-- Provide a nav link to invoke Django's template variable for Log Out if logged in -->
                         <a class="nav-link {% if request.path == logout_url %}active{% endif %}" aria-current="page"
-                            href="{% url 'account_logout' %}">Logout</a>
+                            href="{% url 'account_logout' %}">Logout {{ user.first_name|default:user.username }}</a>
                     </li>
                     {% else %}
                     <li class="nav-item">
@@ -110,8 +114,8 @@ See below
             </div>
         </div>
     </nav>
-    <!-- initial code from CI Django Blog walkthough -->
-    <!-- displaying Django messages -->
+    <!-- Initial code from CI Django Blog walkthough -->
+    <!-- Displaying Django messages -->
     <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2">
@@ -127,16 +131,20 @@ See below
     </div>
 
 
-    <main class="flex-shrink-0 main-bg">
+    <main class="flex-shrink-0">
 
         {% block content %}
-        <!-- Content Goes here -->
+        <!-- Child templates inject content here -->
         {% endblock content %}
 
     </main>
 
     <!-- Footer -->
-    <footer class="footer mt-auto py-3 dark-bg">
+    <!-- Style the footer with Bootsrtap utility classes to:
+     - push the footer to the botton of the page - my-auto
+     - apply vertical padding - py
+     - dark background to match the navbar -->
+    <footer class="mt-auto py-3 bg-dark">
         <p class="m-0 text-center text-white">Follow us: <i class="fab fa-facebook-square ms-3"></i>
             <i class="fab fa-twitter-square ms-3"></i>
             <i class="fab fa-instagram-square ms-3"></i>
