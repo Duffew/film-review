@@ -20,7 +20,7 @@ from .forms import CommentForm
 class ReviewList(generic.ListView):
     queryset = Review.objects.filter(status=1).order_by("-created_on")
     template_name = "review/index.html"
-    paginate_by = 9
+    paginate_by = 6
 
 
 def review_detail(request, slug):

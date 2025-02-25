@@ -38,29 +38,27 @@ ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
-    # Django-contributed apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.humanize',  # humanize
-    'django.contrib.sites',     # allauth dependency
-
-    # Third-party apps
-    'cloudinary',              # cloudinary
-    'cloudinary_storage',      
-    'django_summernote',       # summernote
-    'crispy_forms',            # crispy forms
-    'crispy_bootstrap5',       # crispy forms for Bootstrap 5
-
+    'cloudinary_storage',
+    # humanize
+    'django.contrib.humanize',
     # allauth
+    'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-
-    # Local apps
+    # crispy forms
+    'crispy_forms',
+    'crispy_bootstrap5',
+    # summernote
+    'django_summernote',
+    'cloudinary',
+    # my apps
     'review',
 ]
 

@@ -27,13 +27,13 @@ template inheritance tag
                 <div class="col-md-4">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <!-- Film poster -->
+                            <!-- Film poster logic - from CI Django Blog walkthrough -->
                             <div class="image-container">
                                 {% if "placeholder" in review.poster.url %}
                                 <img class="card-img-top" src="{% static 'images/film_camera.jpg' %}"
                                     alt="placeholder image">
                                 {% else %}
-                                <img class="card-img-top" src=" {{ review.poster.url }}" alt="{{ review.title }}">
+                                <img class="poster-image" src=" {{ review.poster.url }}" alt="{{ review.title }}">
                                 {% endif %}
 
                                 <div class="image-flash">

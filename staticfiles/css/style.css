@@ -11,6 +11,17 @@ body {
     color: #e6e6ed;
 }
 
+.poster-image {
+    max-height: 300px; /* Sets the maximum height to 300px */
+    display: block; /* Ensures the image is treated as a block element */
+    margin-left: auto; /* Centers the image horizontally */
+    margin-right: auto; /* Centers the image horizontally */
+    width: auto; /* Ensures the width scales to fit the image's aspect ratio */
+    max-width: 100%; /* Ensures the image doesn't exceed its container's width */
+    height: auto; /* Maintains the image's aspect ratio */
+}
+
+
 /* .thin {
     font-weight: 300;
 }
