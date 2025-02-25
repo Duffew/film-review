@@ -21,15 +21,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    let deleteModal = document.getElementById('deleteModal');
-    if (deleteModal) {
-        deleteModal.addEventListener('show.bs.modal', function (event) {
-            let button = event.relatedTarget;
-            let commentId = button.getAttribute('data-comment-id');
-            let commentSlug = button.getAttribute('data-comment-slug');
-            let form = document.getElementById('deleteCommentForm');
-            let actionUrl = form.getAttribute('action').replace('__slug__', commentSlug).replace('__id__', commentId);
+    // Delete modal logic
+    document.querySelectorAll('[data-bs-target="#deleteModal"]').forEach(function (button) {
+        button.addEventListener('click', function () {
+            const commentId = this.getAttribute('data-comment-id');
+            const commentSlug = this.getAttribute('data-comment-slug');
+            const form = document.getElementById('deleteCommentForm');
+            const actionUrl = `/${commentSlug}/delete-comment/${commentId}/`;
             form.setAttribute('action', actionUrl);
         });
-    }
+    });
 });

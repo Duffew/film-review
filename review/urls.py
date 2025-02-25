@@ -24,5 +24,5 @@ urlpatterns = [
      # This pattern uses both the slug for the review and the comment_id 
      # to identify the comment
      path('<slug:slug>/delete-comment/<int:comment_id>/', views.delete_comment, 
-         name='delete_comment'),
+          name='delete_comment'),
 ]

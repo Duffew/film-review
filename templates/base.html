@@ -12,8 +12,6 @@ See below
 {% url 'account_signup' as signup_url %}
 {% url 'account_logout' as logout_url %}
 
-
-
 <!DOCTYPE html>
 <html class="h-100" lang="en">
 
@@ -24,23 +22,16 @@ See below
     <!-- Google Fonts CSS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-        rel="stylesheet">
-
-
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-
 </head>
 
 <!-- 
@@ -64,8 +55,7 @@ See below
              - provide accessibilty information and that the navbar is not expanded by default
              - provide a label for screen readers
             -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <!-- Style the button with the Bootstrap class  -->
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -85,31 +75,25 @@ See below
                         'home' in the following link links back the 
                         reviews/urls.py file and the url path named 'home' 
                         -->
-                        <a class="nav-link {% if request.path == home_url %}active{% endif %}" aria-current="page"
-                            href="#">Home</a>
+                        <a class="nav-link {% if request.path == home_url %}active{% endif %}" aria-current="page" href="#">Home</a>
                     </li>
                     <!-- initial code for login, logout and signup from CI blog walkthrough -->
                     <!-- define a condtional for autenticated users -->
                     {% if user.is_authenticated %}
                     <li class="nav-item">
                         <!-- Provide a nav link to invoke Django's template variable for Log Out if logged in -->
-                        <a class="nav-link {% if request.path == logout_url %}active{% endif %}" aria-current="page"
-                            href="{% url 'account_logout' %}">Logout {{ user.first_name|default:user.username }}</a>
+                        <a class="nav-link {% if request.path == logout_url %}active{% endif %}" aria-current="page" href="{% url 'account_logout' %}">Logout {{ user.first_name|default:user.username }}</a>
                     </li>
                     {% else %}
                     <li class="nav-item">
                         <!-- Provide a nav link to invoke Django's template variable for Signup if an unregistered user -->
-                        <a class="nav-link {% if request.path == signup_url %}active{% endif %}" aria-current="page"
-                            href="{% url 'account_signup' %}">Register</a>
+                        <a class="nav-link {% if request.path == signup_url %}active{% endif %}" aria-current="page" href="{% url 'account_signup' %}">Register</a>
                     </li>
                     <li class="nav-item">
                         <!-- Provide a nav link to invoke Django's template variable for Login if not already -->
-                        <a class="nav-link {% if request.path == login_url %}active{% endif %}" aria-current="page"
-                            href="{% url 'account_login' %}">Login</a>
+                        <a class="nav-link {% if request.path == login_url %}active{% endif %}" aria-current="page" href="{% url 'account_login' %}">Login</a>
                     </li>
                     {% endif %}
-
-
                 </ul>
             </div>
         </div>
@@ -120,8 +104,7 @@ See below
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 {% for message in messages %}
-                <div class="alert {{ message.tags }} alert-dismissible
-          fade show" id="msg" role="alert">
+                <div class="alert {{ message.tags }} alert-dismissible fade show" id="msg" role="alert">
                     {{ message | safe }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
@@ -130,13 +113,10 @@ See below
         </div>
     </div>
 
-
     <main class="flex-shrink-0">
-
         {% block content %}
         <!-- Child templates inject content here -->
         {% endblock content %}
-
     </main>
 
     <!-- Footer -->
@@ -151,14 +131,32 @@ See below
             <i class="fab fa-youtube-square ms-3"></i>
         </p>
     </footer>
-    <!-- Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
-        </script>
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirm Delete Comment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this comment?
+                </div>
+                <div class="modal-footer">
+                    <form method="post" id="deleteCommentForm">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (standardized to Bootstrap 5) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    
     <!-- Custom JavaScript -->
     <script src="{% static 'js/script.js' %}"></script>
 </body>
