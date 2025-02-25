@@ -2,6 +2,8 @@
 from django.db import models
 # Import the User model from Django's built-in authentication framework
 from django.contrib.auth.models import User
+# Import Cloudinary to manage film posters
+from cloudinary.models import CloudinaryField
 
 
 STATUS = ((0, "Draft"), (1, "Published"))
@@ -23,6 +25,9 @@ class Review(models.Model):
     
     # Define a content field for the film review text
     content = models.TextField()
+
+    # Define a field for a film poster image hosted by Cloudinary
+    poster = CloudinaryField('image', default='placeholder')
 
     # Add a field for the director's name
     director = models.CharField(max_length=100)

@@ -6,6 +6,8 @@ template inheritance tag
 -->
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block content %}
 
 <!-- index.html content starts here -->
@@ -25,7 +27,15 @@ template inheritance tag
                 <div class="col-md-4">
                     <div class="card mb-4">
                         <div class="card-body">
+                            <!-- Film poster -->
                             <div class="image-container">
+                                {% if "placeholder" in review.poster.url %}
+                                <img class="card-img-top" src="{% static 'images/film_camera.jpg' %}"
+                                    alt="placeholder image">
+                                {% else %}
+                                <img class="card-img-top" src=" {{ review.poster.url }}" alt="{{ review.title }}">
+                                {% endif %}
+
                                 <div class="image-flash">
                                     <p class="author">Author: {{ review.author }}</p>
                                 </div>
@@ -59,8 +69,7 @@ template inheritance tag
             <!-- add conditional statement for displaying 'previous' button -->
             {% if page_obj.has_previous %}
             <li>
-                <a href="?page={{ page_obj.previous_page_number }}"
-                  class="page-link">&laquo; PREV</a>
+                <a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; PREV</a>
             </li>
             {% endif %}
             <!-- add conditional statement for displaying 'next' button -->
