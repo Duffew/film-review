@@ -1,26 +1,95 @@
-/* initial code copied from CI Django Blog walkthrough */
-
+/* Global styles */
 body {
     background-color: #F9FAFC;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Playfair Display', serif; 
 }
 
+/* Logo styles */
 .logo {
     font-size: 2rem;
     font-weight: 700;
     color: #e6e6ed;
+    letter-spacing: 1px
 }
 
+.navbar-menu {
+    font-size: 600;
+    color: #9f0918;
+}
+
+/* Poster image styles */
+/* Parent container */
+.image-container {
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+    height: 350px; /* Set a height to see the effect */
+}
+
+/* Poster image styles */
 .poster-image {
-    max-height: 300px; /* Sets the maximum height to 300px */
-    display: block; /* Ensures the image is treated as a block element */
-    margin-left: auto; /* Centers the image horizontally */
-    margin-right: auto; /* Centers the image horizontally */
-    width: auto; /* Ensures the width scales to fit the image's aspect ratio */
-    max-width: 100%; /* Ensures the image doesn't exceed its container's width */
-    height: auto; /* Maintains the image's aspect ratio */
+    max-height: 300px; /* Sets maximum height to 300px */
+    width: auto; /* Ensures width scales to fit the image's aspect ratio */
+    max-width: 100%; /* Ensures image doesn't exceed its container's width */
+    height: auto; /* Maintains image's aspect ratio */
 }
 
+
+/* Review intro styles */
+.review-intro {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.review-intro a {
+    text-decoration: none;
+    color: #1c2936;
+    transition: color 0.5s;
+}
+
+.review-intro a:hover {
+    color: #9f0918;
+}
+
+.review-intro h2 {
+    font-weight: 600;
+    letter-spacing: 1px
+}
+
+.intro-dir-year {
+    font-weight: 600;
+    letter-spacing: 1px
+}
+
+.author {
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #9f0918;
+}
+
+.page-link {
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #1c2936
+}
+
+.page-link:hover {
+    color: #9f0918;
+    transition: color 0.5s;
+}
+
+/* media query - small and medium devices up to 768px */
+@media (max-width: 768px) {
+    .logo {
+        font-size: 1.5rem;
+    }
+}
+
+/* media query - devices up to 992px */
+@media (max-width: 992px) {
+    .review-intro:focus {
+        outline: 2px solid #9f0918;
+    }
+}
 
 /* .thin {
     font-weight: 300;
@@ -39,28 +108,12 @@ body {
     background-color: transparent;
 }
 
-.image-container {
-    position: relative;
-}
-
-.image-flash {
-    position: absolute;
-    bottom: 5%;
-    min-width: 30%;
-    left: -2px;
-    background-color: #188181;
-}
-
 .scale {
     width: 100%;
     height: auto;
 }
 
-.author {
-    color: white;
-    margin: 4px;
-    text-transform: uppercase;
-}
+
 
 .masthead {
     margin-top: 10px;
@@ -94,11 +147,6 @@ body {
     -moz-transform: skew(15deg);
     transform: skew(15deg);
     z-index: 100;
-}
-
-.post-link {
-    text-decoration: none;
-    color: #445261;
 }
 
 .post-link:hover,

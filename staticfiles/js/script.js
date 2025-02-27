@@ -16,11 +16,14 @@ document.addEventListener('DOMContentLoaded', function () {
         // Add a click event listener to each 'reply-btn'
         button.addEventListener('click', function (event) {
             event.preventDefault();  // Prevent the default action of the link
-            // Get the value of the 'data-parent' attribute from the clicked button
+            // Get the value of the 'data-parent' attribute from the 
+            // clicked button
             const parentId = this.getAttribute('data-parent');
-            // Find the closest comment container and the nested comment form within it
+            // Find the closest comment container and the nested comment form 
+            // within it
             const parentComment = this.closest('.comments');
-            const nestedForm = parentComment.querySelector('.nested-comment-form');
+            const nestedForm = parentComment.querySelector(
+                '.nested-comment-form');
             // Set the parent ID in the nested form's hidden input field
             nestedForm.querySelector('.parent-id').value = parentId;
             // Toggle the visibility of the nested comment form
