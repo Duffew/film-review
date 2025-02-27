@@ -1,24 +1,12 @@
-/* Global styles */
+/* style.css */
+
+/* Global/Base Styles - Reset or set defaults for the entire site */
 body {
     background-color: #F9FAFC;
     font-family: 'Playfair Display', serif; 
 }
 
-/* Logo styles */
-.logo {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #e6e6ed;
-    letter-spacing: 1px
-}
-
-.navbar-menu {
-    font-size: 600;
-    color: #9f0918;
-}
-
-/* Poster image styles */
-/* Parent container */
+/* Layout/Structural Styles - Containers, grids, etc. */
 .image-container {
     display: flex;
     justify-content: center; /* Centers horizontally */
@@ -26,20 +14,35 @@ body {
     height: 350px; /* Set a height to see the effect */
 }
 
-/* Poster image styles */
-.poster-image {
-    max-height: 300px; /* Sets maximum height to 300px */
-    width: auto; /* Ensures width scales to fit the image's aspect ratio */
-    max-width: 100%; /* Ensures image doesn't exceed its container's width */
-    height: auto; /* Maintains image's aspect ratio */
+.detail-main-sections {
+    max-width: 100%;
+    width: calc(100% - 2rem); /* Matches your updated 2rem from review_detail.html */
 }
 
+/* Component-Specific Styles - Reusable elements like logo, images, etc. */
+.logo {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #e6e6ed;
+    letter-spacing: 1px;
+}
 
-/* Review intro styles */
+.poster-image {
+    max-height: 300px;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Content-Specific Styles - Unique sections like reviews, pagination */
 .review-intro {
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
+
 .review-intro a {
     text-decoration: none;
     color: #1c2936;
@@ -50,14 +53,15 @@ body {
     color: #9f0918;
 }
 
-.review-intro h2 {
+.review-title {
     font-weight: 600;
-    letter-spacing: 1px
+    font-size: 3rem;
+    letter-spacing: 1px;
 }
 
 .intro-dir-year {
     font-weight: 600;
-    letter-spacing: 1px
+    letter-spacing: 1px;
 }
 
 .author {
@@ -69,7 +73,7 @@ body {
 .page-link {
     font-weight: 600;
     letter-spacing: 1px;
-    color: #1c2936
+    color: #1c2936;
 }
 
 .page-link:hover {
@@ -77,14 +81,17 @@ body {
     transition: color 0.5s;
 }
 
-/* media query - small and medium devices up to 768px */
+/* Media Queries - Responsive adjustments, grouped by breakpoint */
 @media (max-width: 768px) {
     .logo {
         font-size: 1.5rem;
     }
+
+    .review-title {
+        font-size: 1.5rem;
+    }
 }
 
-/* media query - devices up to 992px */
 @media (max-width: 992px) {
     .review-intro:focus {
         outline: 2px solid #9f0918;

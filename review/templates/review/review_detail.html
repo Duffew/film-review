@@ -1,5 +1,3 @@
-<!-- initial code borrowed from CI Django blog walkthrough -->
-
 {% extends 'base.html' %}
 
 {% block content %}
@@ -7,39 +5,46 @@
 <!-- crispy forms -->
 {% load crispy_forms_tags %}
 <!-- Load humanize tags -->
-{% load humanize %}  
+{% load humanize %}
 
-<div class="masthead">
-    <div class="container">
-        <div class="row g-0">
-            <div class="col-md-6 masthead-text">
-                <!-- review film_title goes in these h1 tags -->
-                <h1 class="review-title">{{ review.film_review }}</h1>
-                <!-- review author goes before the | the review's created date goes after -->
-                <p class="review-subtitle">{{ review.author }} | {{ review.created_on }}</p>
-            </div>
-            <div class="d-none d-md-block col-md-6 masthead-image">
-                <img src="{% static 'images/film_camera.jpg' %}" class="scale" alt="placeholder">
-            </div>
+<!-- Masthead Section -->
+<div class="container border mt-4 px-3 py-3 mx-auto detail-main-sections">
+    <div class="row g-0 align-items-center">
+        <div class="col-md-9 masthead-text">
+            <!-- review film_title goes in these h2 tags -->
+            <h2 class="review-title">{{ review.film_title }}</h2>
+            <p class="intro-dir-year">Director: {{ review.director }} | Released: {{ review.release_year }}</p>
+            <!-- review author goes before the | the review's created date goes after -->
+            <p><span class="author">Reviewed by: {{ review.author }}</span> | <span class="text-muted">First Published {{ review.created_on }}</span></p>
+        </div>
+        <div class="col-md-3 d-flex justify-content-end image-container">
+            {% if "placeholder" in review.poster.url %}
+            <img class="poster-image" src="{% static 'images/film_camera.jpg' %}" alt="Placeholder image for {{ review.film_title }}">
+            {% else %}
+            <img class="poster-image" src="{{ review.poster.url }}" alt="Poster for {{ review.film_title }}">
+            {% endif %}
         </div>
     </div>
 </div>
 
-<div class="container">
+<!-- Review Content Section -->
+<div class="container border mt-4 px-3 py-3 mx-auto detail-main-sections">
     <div class="row">
-        <div class="col card mb-4 mt-3 left  top">
+        <div class="col card mb-0 border-0">
             <div class="card-body">
-                <!-- The review content goes inside the card-text. -->
-                <!-- Use the | safe filter inside the template tags to mark the 
-                 html as safe to render -->
+                <h2 class="review-title">{{ review.film_review }}</h2>
                 <p class="card-text">
                     {{ review.content | safe }}
                 </p>
             </div>
         </div>
     </div>
-    <!-- code from CI Django blog walkthrough -->
-    <!-- Displaying count of comments -->
+</div>
+
+<!-- Comments Section -->
+<!-- code from CI Django blog walkthrough -->
+<!-- Displaying count of comments -->
+<div class="container border mt-4 px-3 py-3 mx-auto detail-main-sections">
     <div class="row">
         <div class="col-12">
             <strong class="text-secondary">
@@ -50,18 +55,17 @@
             <hr>
         </div>
     </div>
+
     <!-- Displaying Comments -->
     <div class="row">
-        <div class="col-md-8 card mb-4 mt-3">
-            <h3>Comments:</h3>
+        <div class="col-md-8 card mb-0 border-0">
             <div class="card-body">
+                <h3>Comments:</h3>
                 <!-- Include top-level comments (those without a parent) -->
                 {% include "review/comments.html" with comments=comments %}
             </div>
         </div>
-        <!-- crispy form - initial code from CI Django Blog Walkthrough -->
-        <!-- Creating New Comments -->
-        <div class="col-md-4 card mb-4 mt-3">
+        <div class="col-md-4 card mb-0 border-0">
             <div class="card-body">
                 {% if user.is_authenticated %}
                 <h3>Begin a new thread:</h3>
