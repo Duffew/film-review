@@ -16,7 +16,9 @@ body {
 
 .detail-main-sections {
     max-width: 100%;
-    width: calc(100% - 2rem); /* Matches your updated 2rem from review_detail.html */
+    width: calc(100% - 2rem); 
+    /* display: flex;
+    justify-content: space-evenly; */
 }
 
 /* Component-Specific Styles - Reusable elements like logo, images, etc. */
@@ -37,6 +39,35 @@ body {
     margin-right: auto;
 }
 
+.custom-button {
+    background-color: #1c2936; /* Initial background color */
+    color: white; /* Initial text color */
+    border: none; /* Optional: Remove the border if you want a clean look */
+    padding: 0.5rem 1rem; /* Optional: Adjust the padding for better spacing */
+    border-radius: 0.25rem; /* Optional: Add border radius for rounded corners */
+    font-weight: bold; /* Optional: Make the text bold */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+    text-decoration: none;
+}
+
+.custom-button:hover,
+.custom-crud-button:hover {
+    background-color: #9f0918; /* Background color on hover */
+    color: white; /* Keep text color the same on hover */
+}
+
+.custom-crud-button {
+    background-color: #e6e6ed; /* Initial background color */
+    color: #1c2936; /* Initial text color */
+    border: none; /* Optional: Remove the border if you want a clean look */
+    padding: 0.5rem 1rem; /* Optional: Adjust the padding for better spacing */
+    border-radius: 0.25rem; /* Optional: Add border radius for rounded corners */
+    font-weight: bold; /* Optional: Make the text bold */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+    text-decoration: none;
+}
+
+
 /* Content-Specific Styles - Unique sections like reviews, pagination */
 .review-intro {
     margin-top: 1rem;
@@ -49,8 +80,16 @@ body {
     transition: color 0.5s;
 }
 
-.review-intro a:hover {
+.review-intro a h2 {
+    font-size: 2.5rem;
+    color: #1c2936;
+    font-weight: 600;
+}
+
+.review-intro a:hover,
+.review-intro a:hover h2 {
     color: #9f0918;
+    transition: color 0.5s;
 }
 
 .review-title {
@@ -66,6 +105,7 @@ body {
 
 .author {
     font-weight: 600;
+    font-size: 1.15rem;
     letter-spacing: 1px;
     color: #9f0918;
 }
@@ -81,6 +121,22 @@ body {
     transition: color 0.5s;
 }
 
+.font-weight-bold {
+    font-weight: 700 !important;
+}
+
+.custom-reply-button {
+    color: #1c2936;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.custom-reply-button:hover {
+    
+    color: #9f0918;
+    transition: color 0.5s;
+}
+
 /* Media Queries - Responsive adjustments, grouped by breakpoint */
 @media (max-width: 768px) {
     .logo {
@@ -90,6 +146,7 @@ body {
     .review-title {
         font-size: 1.5rem;
     }
+
 }
 
 @media (max-width: 992px) {
@@ -118,47 +175,6 @@ body {
 .scale {
     width: 100%;
     height: auto;
-}
-
-
-
-.masthead {
-    margin-top: 10px;
-    overflow: hidden;
-    position: relative;
-    display: inline-block;
-    height: 33vh;
-    width: 100%;
-}
-
-.masthead-text {
-    background-color: #445261;
-    color: white;
-    position: relative;
-}
-
-.masthead-image {
-    position: relative;
-    overflow: hidden;
-}
-
-.masthead-image:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 90%;
-    height: 100%;
-    width: 150%;
-    background: #445261;
-    -webkit-transform: skew(15deg);
-    -moz-transform: skew(15deg);
-    transform: skew(15deg);
-    z-index: 100;
-}
-
-.post-link:hover,
-.page-link {
-    color: #E84610;
 }
 
 .post-title {

@@ -15,30 +15,19 @@ review_detail.html template and, therefore, does not require its own URL path.
 <div class="p-2 comments
 {% if not comment.approved and comment.author == user %}
 faded{% elif not comment.approved %} d-none{% endif %}">
-    <p class="font-weight-bold">
-        {{ comment.author }}
-        <span class="font-weight-normal">
-            {{ comment.created_on|naturaltime }}
-        </span> wrote:
+    <p><span class="font-weight-bold author">
+            {{ comment.author }}</span>
+        <span class="font-weight-normal text-muted">
+            {{ comment.created_on|naturaltime }}</span>
+        <span class="font-weight-bold">
+            wrote:</span>
     </p>
 
     <div id="comment{{ comment.id }}">
         {{ comment.content | linebreaks }}
     </div>
-    <!-- Only show the edit and delete buttons if the current user is the author of the comment -->
-    {% if comment.author == user %}
-    <a href="{% url 'edit_comment' slug=comment.review.slug comment_id=comment.id %}" class="btn btn-edit">Edit</a>
-    <a href="#" class="btn btn-edit" data-bs-toggle="modal" data-bs-target="#deleteModal" 
-       data-comment-id="{{ comment.id }}" data-comment-slug="{{ comment.review.slug }}">Delete</a>
-    {% endif %}
-    {% if not comment.approved and comment.author == user %}
-    <p class="approval">
-        This comment is awaiting approval
-    </p>
-    {% endif %}
-
     <!-- Add a reply button -->
-    <a class="reply-btn" href="#comment-form" data-parent="{{ comment.id }}">Reply</a>
+    <a class="reply-btn custom-reply-button" href="#comment-form" data-parent="{{ comment.id }}">Reply</a>
     <!-- Hidden nested comment form template -->
     <div class="nested-comment-form" style="display: none;">
         {% if user.is_authenticated %}
@@ -46,12 +35,25 @@ faded{% elif not comment.approved %} d-none{% endif %}">
             {{ comment_form.as_p }}
             {% csrf_token %}
             <input type="hidden" name="parent" class="parent-id"> <!-- Hidden input field for parent ID -->
-            <button type="submit" class="btn btn-signup btn-sm">Submit</button>
+            <button type="submit" class="btn btn-signup btn-sm custom-button">Submit</button>
         </form>
         {% else %}
         <p>Log in to leave a comment</p>
         {% endif %}
     </div>
+    <!-- Only show the edit and delete buttons if the current user is the author of the comment -->
+    {% if comment.author == user %}
+    <a href="{% url 'edit_comment' slug=comment.review.slug comment_id=comment.id %}" class="btn btn custom-crud-button">Edit</a>
+    <a href="#" class="btn btn-edit custom-crud-button" data-bs-toggle="modal" data-bs-target="#deleteModal"
+        data-comment-id="{{ comment.id }}" data-comment-slug="{{ comment.review.slug }}">Delete</a>
+    {% endif %}
+    {% if not comment.approved and comment.author == user %}
+    <p class="approval">
+        This comment is awaiting approval
+    </p>
+    {% endif %}
+
+    
     <!-- 
     Recursively include child comments using the comments.html template 
     within review_detail.html

@@ -10,14 +10,14 @@
 <!-- Masthead Section -->
 <div class="container border mt-4 px-3 py-3 mx-auto detail-main-sections">
     <div class="row g-0 align-items-center">
-        <div class="col-md-9 masthead-text">
+        <div class="col-md-9 justify-content-end">
             <!-- review film_title goes in these h2 tags -->
             <h2 class="review-title">{{ review.film_title }}</h2>
             <p class="intro-dir-year">Director: {{ review.director }} | Released: {{ review.release_year }}</p>
             <!-- review author goes before the | the review's created date goes after -->
             <p><span class="author">Reviewed by: {{ review.author }}</span> | <span class="text-muted">First Published {{ review.created_on }}</span></p>
         </div>
-        <div class="col-md-3 d-flex justify-content-end image-container">
+        <div class="col-md-3 d-flex justify-content-right image-container">
             {% if "placeholder" in review.poster.url %}
             <img class="poster-image" src="{% static 'images/film_camera.jpg' %}" alt="Placeholder image for {{ review.film_title }}">
             {% else %}
@@ -60,7 +60,7 @@
     <div class="row">
         <div class="col-md-8 card mb-0 border-0">
             <div class="card-body">
-                <h3>Comments:</h3>
+                <h3 class="font-weight-bold">Comments:</h3>
                 <!-- Include top-level comments (those without a parent) -->
                 {% include "review/comments.html" with comments=comments %}
             </div>
@@ -68,13 +68,13 @@
         <div class="col-md-4 card mb-0 border-0">
             <div class="card-body">
                 {% if user.is_authenticated %}
-                <h3>Begin a new thread:</h3>
-                <p>Posting as: {{ user.username }}</p>
+                <h3 class="font-weight-bold">Begin a new thread:</h3>
+                <p>Posting as: <span class="author font-weight-bold">{{ user.username }}</span></p>
                 <form id="comment-form" method="post" style="margin-top: 1.3em;">
                     {{ comment_form | crispy }}
                     {% csrf_token %}
                     <input type="hidden" name="parent" id="parent-id">
-                    <button id="submitButton" type="submit" class="btn btn-signup btn-lg">Submit</button>
+                    <button id="submitButton" type="submit" class="btn btn-lg custom-button">Submit</button>
                 </form>
                 {% else %}
                 <p>Log in to leave a comment</p>

@@ -27,8 +27,8 @@
                                     </a>
                                 </div>
                                 <div class="col-md-7 review-intro">
-                                    <a href="{% url 'review_detail' review.slug %}" class="post-link" aria-label="Read full review of {{ review.film_title }}">
-                                        <h2 class="card-title">{{ review.film_title }}</h2>
+                                    <a href="{% url 'review_detail' review.slug %}" aria-label="Read full review of {{ review.film_title }}">
+                                        <h2>{{ review.film_title }}</h2>
                                         <p class="intro-dir-year">Director: {{ review.director }} | Released: {{ review.release_year }}</p>
                                         <p class="card-text">{{ review.excerpt | safe }}</p>
                                     </a>
