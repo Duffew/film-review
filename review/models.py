@@ -7,7 +7,8 @@ from cloudinary.models import CloudinaryField
 
 
 STATUS = ((0, "Draft"), (1, "Published"))
-# Create your models here.
+
+
 class Review(models.Model):
     # Define a field for the film title which must be unique in the database
     film_title = models.CharField(max_length=200, unique=True)
@@ -18,11 +19,11 @@ class Review(models.Model):
     # Define an author field which references a foriegn key field type and uses
     # Django's built-in authentication framework 'User' as an argument.
     # Include full deletion of Review instances if the User is deleted.
-    # Include a reverse relationship to enable a query set of Review instances 
+    # Include a reverse relationship to enable a query set of Review instances
     # by author.
-    author = models.ForeignKey(User, on_delete=models.CASCADE, 
+    author = models.ForeignKey(User, on_delete=models.CASCADE,
                                related_name='reviews')
-    
+
     # Define a content field for the film review text
     content = models.TextField()
 
@@ -46,7 +47,6 @@ class Review(models.Model):
     # review on the list page
     excerpt = models.TextField(blank=True)
 
-
     # Add a Meta class to order the film reviews by most recent first when
     # displayed as a list
     class Meta:
@@ -55,15 +55,15 @@ class Review(models.Model):
     # Add a string method to detail how Review instances should be displayed
     def __str__(self):
         return f"{self.film_title} | Reviewed by {self.author}"
-    
+
 
 # Create a Comments model to manage comments on the film reviews
 class Comment(models.Model):
     # Create a many-to-one relationship to the Review model that deletes if
     # the film review is deleted
-    review = models.ForeignKey(Review, on_delete=models.CASCADE, 
+    review = models.ForeignKey(Review, on_delete=models.CASCADE,
                                related_name="comments")
-    
+
     # Reference the User model for the author of the comment
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -73,22 +73,20 @@ class Comment(models.Model):
     # Add an approved field to enable Site Admin to approve the comment
     approved = models.BooleanField(default=False)
 
-    # Add a field to automatically capture the date and time 
+    # Add a field to automatically capture the date and time
     # the comment was created
     created_on = models.DateTimeField(auto_now_add=True)
-    
-    # Create a self-referential foreign key to enable threaded comments
-    parent = models.ForeignKey('self', null=True, blank=True, 
-                               related_name='replies', on_delete=models.CASCADE)
 
-    
+    # Create a self-referential foreign key to enable threaded comments
+    parent = models.ForeignKey(
+        'self', null=True, blank=True,
+        related_name='replies', on_delete=models.CASCADE)
+
     # Add metadata to enable comments to show in order of oldest first
     # by default.
     class Meta:
         ordering = ["created_on"]
 
-    
-    # Add a string method to define how the comment should read as a string. 
+    # Add a string method to define how the comment should read as a string.
     def __str__(self):
         return f"{self.author} wrote: {self.content}"
-    

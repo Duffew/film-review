@@ -3,7 +3,7 @@
 /* Global/Base Styles - Reset or set defaults for the entire site */
 body {
     background-color: #F9FAFC;
-    font-family: 'Playfair Display', serif; 
+    font-family: 'Playfair Display', serif;
 }
 
 /* Layout/Structural Styles - Containers, grids, etc. */
@@ -11,14 +11,12 @@ body {
     display: flex;
     justify-content: center; /* Centers horizontally */
     align-items: center; /* Centers vertically */
-    height: 350px; /* Set a height to see the effect */
+    height: 350px;
 }
 
 .detail-main-sections {
-    max-width: 100%;
-    width: calc(100% - 2rem); 
-    /* display: flex;
-    justify-content: space-evenly; */
+    max-width: 1100px;
+    width: calc(100% - 2rem);
 }
 
 /* Component-Specific Styles - Reusable elements like logo, images, etc. */
@@ -29,6 +27,7 @@ body {
     letter-spacing: 1px;
 }
 
+/* Film poster */
 .poster-image {
     max-height: 300px;
     width: auto;
@@ -39,8 +38,20 @@ body {
     margin-right: auto;
 }
 
+/* Submit button */
 .custom-button {
     background-color: #1c2936; /* Initial background color */
+    color: white; /* Initial text color */
+    border: none; /* Optional: Remove the border if you want a clean look */
+    padding: 0.5rem 1rem; /* Optional: Adjust the padding for better spacing */
+    border-radius: 0.25rem; /* Optional: Add border radius for rounded corners */
+    font-weight: bold; /* Optional: Make the text bold */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+    text-decoration: none;
+}
+
+.custom-button-warning {
+    background-color: #9f0918; /* Initial background color */
     color: white; /* Initial text color */
     border: none; /* Optional: Remove the border if you want a clean look */
     padding: 0.5rem 1rem; /* Optional: Adjust the padding for better spacing */
@@ -56,6 +67,12 @@ body {
     color: white; /* Keep text color the same on hover */
 }
 
+.custom-button-warning:hover {
+    background-color: #1c2936; /* Background color on hover */
+    color: white; /* Keep text color the same on hover */
+}
+
+/* Edit and delete buttons */
 .custom-crud-button {
     background-color: #e6e6ed; /* Initial background color */
     color: #1c2936; /* Initial text color */
@@ -67,6 +84,22 @@ body {
     text-decoration: none;
 }
 
+/* Form container for edit comments */
+.form-container {
+    max-width: 100%; /* Prevent overflow beyond container */
+    word-wrap: break-word; /* Break long words if necessary */
+}
+
+.form-container p {
+    margin-bottom: 1rem; /* Consistent spacing */
+}
+
+.form-container input,
+.form-container textarea {
+    width: 100%; /* Full width of container */
+    max-width: 100%; /* Prevent overflow */
+    box-sizing: border-box; /* Include padding/borders in width */
+}
 
 /* Content-Specific Styles - Unique sections like reviews, pagination */
 .review-intro {
@@ -122,7 +155,7 @@ body {
 }
 
 .font-weight-bold {
-    font-weight: 700 !important;
+    font-weight: 700;
 }
 
 .custom-reply-button {
@@ -132,106 +165,46 @@ body {
 }
 
 .custom-reply-button:hover {
-    
     color: #9f0918;
     transition: color 0.5s;
 }
 
 /* Media Queries - Responsive adjustments, grouped by breakpoint */
+
+/* Screens up to 768px */
 @media (max-width: 768px) {
+    /* Shrink logo text */
     .logo {
         font-size: 1.5rem;
     }
-
-    .review-title {
-        font-size: 1.5rem;
+    
+    /* Shrink film title text */
+    .review-intro a h2 {
+        font-size: 1.8rem;
     }
 
+    /* Shrink the crud buttons on smaller screens */
+    .custom-crud-button {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    .review-title {
+        font-size: 1.8rem;
+    }
 }
 
+/* Screens up to 576px */
+@media (max-width: 576px) {
+    .form-container input,
+    .form-container textarea {
+        font-size: 14px; /* Slightly smaller font on very small screens */
+    }
+}
+
+/* Screens up to 992px */
 @media (max-width: 992px) {
     .review-intro:focus {
         outline: 2px solid #9f0918;
     }
 }
-
-/* .thin {
-    font-weight: 300;
-}
-
-.light-bg {
-    background-color: #fff;
-}
-
-.dark-bg {
-    background-color: #445261;
-}
-
-.card {
-    border: none;
-    background-color: transparent;
-}
-
-.scale {
-    width: 100%;
-    height: auto;
-}
-
-.post-title {
-    margin-top: 10%;
-    margin-left: 5%;
-}
-
-.post-subtitle {
-    margin-left: 5%;
-    color: lightgray;
-}
-
-.btn-signup,
-.btn-edit {
-    background-color: #188181;
-    color: #fff;
-}
-
-.btn-signup:hover,
-.btn-signup:active {
-    background-color: #fff;
-    color: #23BBBB;
-}
-
-.link {
-    color: #23BBBB;
-    text-decoration: none;
-}
-
-.link:hover,
-.link:active {
-    color: #445261;
-    text-decoration: underline;
-}
-
-.btn-like {
-    color: #E84610;
-    border: none;
-    background: transparent;
-}
-
-.btn-delete {
-    color: #fff;
-    background: #E84610;
-}
-
-.btn-like:hover,
-.btn-like:active {
-    color: #E84610;
-    background: transparent;
-    border: none;
-}
-
-.faded {
-    color: rgb(172, 175, 175);
-}
-
-.approval {
-    color: rgb(222, 146, 168);
-}  */

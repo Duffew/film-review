@@ -1,4 +1,4 @@
-<!-- initial code from CI Django Blog walkthrough project -->
+<!-- Credit Code Institute Django Blog walkthrough project -->
 {% extends "base.html" %}
 
 {% load i18n %}
@@ -22,7 +22,7 @@
                 {% if redirect_field_value %}
                 <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                 {% endif %}
-                <button class="btn btn-signup right" type="submit">{% trans 'Sign Out' %}</button>
+                <button class="custom-button" type="submit">{% trans 'Sign Out' %}</button>
             </form>
         </div>
     </div>

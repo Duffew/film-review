@@ -35,7 +35,7 @@ faded{% elif not comment.approved %} d-none{% endif %}">
             {{ comment_form.as_p }}
             {% csrf_token %}
             <input type="hidden" name="parent" class="parent-id"> <!-- Hidden input field for parent ID -->
-            <button type="submit" class="btn btn-signup btn-sm custom-button">Submit</button>
+            <button type="submit" class="custom-button">Submit</button>
         </form>
         {% else %}
         <p>Log in to leave a comment</p>
@@ -43,8 +43,8 @@ faded{% elif not comment.approved %} d-none{% endif %}">
     </div>
     <!-- Only show the edit and delete buttons if the current user is the author of the comment -->
     {% if comment.author == user %}
-    <a href="{% url 'edit_comment' slug=comment.review.slug comment_id=comment.id %}" class="btn btn custom-crud-button">Edit</a>
-    <a href="#" class="btn btn-edit custom-crud-button" data-bs-toggle="modal" data-bs-target="#deleteModal"
+    <a href="{% url 'edit_comment' slug=comment.review.slug comment_id=comment.id %}" class="custom-crud-button">Edit</a>
+    <a href="#" class="custom-crud-button" data-bs-toggle="modal" data-bs-target="#deleteModal"
         data-comment-id="{{ comment.id }}" data-comment-slug="{{ comment.review.slug }}">Delete</a>
     {% endif %}
     {% if not comment.approved and comment.author == user %}
