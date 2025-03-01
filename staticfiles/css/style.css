@@ -29,10 +29,9 @@ body {
 
 /* Film poster */
 .poster-image {
-    max-height: 300px;
-    width: auto;
-    max-width: 100%;
-    height: auto;
+    height: 300px; /* Explicit height as requested */
+    max-width: 100%; /* Ensures responsiveness */
+    object-fit: contain; /* Preserves aspect ratio */
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -103,7 +102,7 @@ body {
 
 /* Content-Specific Styles - Unique sections like reviews, pagination */
 
-/* Film review introdcutions on review_detail.html */
+/* Film review introductions on review_detail.html */
 .review-intro {
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -145,6 +144,7 @@ body {
     color: #9f0918;
 }
 
+/* Index page Next and Previous buttons */
 .page-link {
     font-weight: 600;
     letter-spacing: 1px;
