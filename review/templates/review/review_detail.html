@@ -42,7 +42,7 @@
 </div>
 
 <!-- Comments Section -->
-<!-- code from CI Django blog walkthrough -->
+<!-- Credit Code Institute Django blog walkthrough -->
 <!-- Displaying count of comments -->
 <div class="container border mt-4 mb-4 px-3 py-3 mx-auto detail-main-sections">
     <div class="row">
@@ -74,10 +74,10 @@
                     {{ comment_form | crispy }}
                     {% csrf_token %}
                     <input type="hidden" name="parent" id="parent-id">
-                    <button id="submitButton" type="submit" class="btn btn-lg custom-button">Submit</button>
+                    <button id="submitButton" type="submit" class="custom-button">Submit</button>
                 </form>
                 {% else %}
-                <p>Log in to leave a comment</p>
+                <p>Log in to leave a comment or reply.</p>
                 {% endif %}
             </div>
         </div>
