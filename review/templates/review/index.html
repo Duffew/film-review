@@ -16,23 +16,29 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <!-- Link to detailed film review -->
-                                    <a href="{% url 'review_detail' review.slug %}" aria-label="Read full review of {{ review.film_title }}">
-                                        <div class="image-container">  
+                                    <a href="{% url 'review_detail' review.slug %}"
+                                        aria-label="Read full review of {{ review.film_title }}">
+                                        <div class="image-container">
                                             {% if "placeholder" in review.poster.url %}
-                                            <img class="poster-image" src="{% static 'images/film_camera.jpg' %}" alt="Placeholder image for {{ review.film_title }}">
+                                            <img class="poster-image" src="{% static 'images/film_camera.jpg' %}"
+                                                alt="Placeholder image for {{ review.film_title }}">
                                             {% else %}
-                                            <img class="poster-image" src="{{ review.poster.url }}" alt="Poster for {{ review.film_title }}">
+                                            <img class="poster-image" src="{{ review.poster.url }}"
+                                                alt="Poster for {{ review.film_title }}">
                                             {% endif %}
                                         </div>
                                     </a>
                                 </div>
                                 <div class="col-md-7 review-intro">
-                                    <a href="{% url 'review_detail' review.slug %}" aria-label="Read full review of {{ review.film_title }}">
+                                    <a href="{% url 'review_detail' review.slug %}"
+                                        aria-label="Read full review of {{ review.film_title }}">
                                         <h2>{{ review.film_title }}</h2>
-                                        <p class="intro-dir-year">Director: {{ review.director }} | Released: {{ review.release_year }}</p>
-                                        <p class="card-text">{{ review.excerpt | safe }}</p>
+                                        <p class="intro-dir-year">Director: {{ review.director }} | Released: {{
+                                            review.release_year }}</p>
+                                        <!-- Changed from <p class="card-text"> to <div class="card-text"> to avoid nesting with excerpt's <p> tags -->
+                                        <div class="card-text">{{ review.excerpt | safe }}</div>
                                     </a>
-                                    <hr />
+                                    <hr>
                                     <div>
                                         <p class="author">Reviewed by: {{ review.author }}</p>
                                     </div>

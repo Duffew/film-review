@@ -32,9 +32,12 @@ faded{% elif not comment.approved %} d-none{% endif %}">
     <div class="nested-comment-form" style="display: none;">
         {% if user.is_authenticated %}
         <form method="post">
-            {{ comment_form.as_p }}
             {% csrf_token %}
-            <input type="hidden" name="parent" class="parent-id"> <!-- Hidden input field for parent ID -->
+            <p>
+                <label for="id_content_{{ comment.id }}">Content:</label>
+                <textarea name="content" cols="40" rows="10" required id="id_content_{{ comment.id }}"></textarea>
+            </p>
+            <input type="hidden" name="parent" class="parent-id" value="{{ comment.id }}">
             <button type="submit" class="custom-button">Submit</button>
         </form>
         {% else %}
@@ -53,12 +56,10 @@ faded{% elif not comment.approved %} d-none{% endif %}">
     </p>
     {% endif %}
 
-    
     <!-- 
     Recursively include child comments using the comments.html template 
     within review_detail.html
     -->
     {% include "review/comments.html" with comments=comment.replies.all %}
-
 </div>
 {% endfor %}

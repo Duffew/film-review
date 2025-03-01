@@ -1,4 +1,4 @@
-<!-- Credit Code Institute Django Blog walkthrough project -->
+<!-- Credit Code Institute Django Blog walkthrough project for initial template -->
 {% extends "base.html" %}
 
 {% load i18n %}
@@ -21,19 +21,43 @@
   </div>
   <div class="row">
     <div class="col-md-8 mt-3 offset-md-2">
-      <form class="signup" id="signup_form" method="post"
-        action="{% url 'account_signup' %}">
+      <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
         {% csrf_token %}
-        {{ form.as_p }}
-        {% if redirect_field_value %}
-        <input type="hidden" name="{{ redirect_field_name }}"
-          value="{{ redirect_field_value }}" />
+        <!-- Manually render form fields to avoid nesting issues with as_p -->
+        <p>
+          {{ form.username.label_tag }}
+          {{ form.username }}
+        </p>
+        {% if form.username.help_text %}
+        <div class="helptext">{{ form.username.help_text }}</div>
         {% endif %}
-        <button class="custom-button" type="submit">
-          {% trans "Sign Up" %} &raquo;</button>
+        <p>
+          {{ form.email.label_tag }}
+          {{ form.email }}
+        </p>
+        {% if form.email.help_text %}
+        <div class="helptext">{{ form.email.help_text }}</div>
+        {% endif %}
+        <p>
+          {{ form.password1.label_tag }}
+          {{ form.password1 }}
+        </p>
+        {% if form.password1.help_text %}
+        <div class="helptext" id="id_password1_helptext">{{ form.password1.help_text | safe }}</div>
+        {% endif %}
+        <p>
+          {{ form.password2.label_tag }}
+          {{ form.password2 }}
+        </p>
+        {% if form.password2.help_text %}
+        <div class="helptext">{{ form.password2.help_text }}</div>
+        {% endif %}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <button class="custom-button" type="submit">{% trans "Sign Up" %} »</button>
       </form>
     </div>
   </div>
 </div>
-
 {% endblock %}
