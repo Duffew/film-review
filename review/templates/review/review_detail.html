@@ -18,6 +18,7 @@
             <p><span class="author">Reviewed by: {{ review.author }}</span> | <span class="text-muted">First Published {{ review.created_on }}</span></p>
         </div>
         <div class="col-md-3 d-flex justify-content-right image-container">
+            <!-- Use a default placeholder image if film poster not available -->
             {% if "placeholder" in review.poster.url %}
             <img class="poster-image" src="{% static 'images/film_camera.jpg' %}" alt="Placeholder image for {{ review.film_title }}">
             {% else %}

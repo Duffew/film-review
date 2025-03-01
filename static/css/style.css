@@ -40,24 +40,24 @@ body {
 
 /* Submit button */
 .custom-button {
-    background-color: #1c2936; /* Initial background color */
-    color: white; /* Initial text color */
-    border: none; /* Optional: Remove the border if you want a clean look */
-    padding: 0.5rem 1rem; /* Optional: Adjust the padding for better spacing */
-    border-radius: 0.25rem; /* Optional: Add border radius for rounded corners */
-    font-weight: bold; /* Optional: Make the text bold */
-    transition: background-color 0.3s ease; /* Smooth transition for background color */
+    background-color: #1c2936;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
     text-decoration: none;
 }
 
 .custom-button-warning {
-    background-color: #9f0918; /* Initial background color */
-    color: white; /* Initial text color */
-    border: none; /* Optional: Remove the border if you want a clean look */
-    padding: 0.5rem 1rem; /* Optional: Adjust the padding for better spacing */
-    border-radius: 0.25rem; /* Optional: Add border radius for rounded corners */
-    font-weight: bold; /* Optional: Make the text bold */
-    transition: background-color 0.3s ease; /* Smooth transition for background color */
+    background-color: #9f0918;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
     text-decoration: none;
 }
 
@@ -74,13 +74,13 @@ body {
 
 /* Edit and delete buttons */
 .custom-crud-button {
-    background-color: #e6e6ed; /* Initial background color */
-    color: #1c2936; /* Initial text color */
-    border: none; /* Optional: Remove the border if you want a clean look */
-    padding: 0.5rem 1rem; /* Optional: Adjust the padding for better spacing */
-    border-radius: 0.25rem; /* Optional: Add border radius for rounded corners */
-    font-weight: bold; /* Optional: Make the text bold */
-    transition: background-color 0.3s ease; /* Smooth transition for background color */
+    background-color: #e6e6ed;
+    color: #1c2936;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
     text-decoration: none;
 }
 
@@ -91,7 +91,7 @@ body {
 }
 
 .form-container p {
-    margin-bottom: 1rem; /* Consistent spacing */
+    margin-bottom: 1rem;
 }
 
 .form-container input,
@@ -102,6 +102,8 @@ body {
 }
 
 /* Content-Specific Styles - Unique sections like reviews, pagination */
+
+/* Film review introdcutions on review_detail.html */
 .review-intro {
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -158,6 +160,7 @@ body {
     font-weight: 700;
 }
 
+/* Comment reply button */
 .custom-reply-button {
     color: #1c2936;
     font-weight: 700;
