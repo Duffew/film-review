@@ -10,6 +10,7 @@ STATUS = ((0, "Draft"), (1, "Published"))
 
 
 class Review(models.Model):
+    """A model representing a film review written by an author."""
     # Define a field for the film title which must be unique in the database
     film_title = models.CharField(max_length=200, unique=True)
 
@@ -59,6 +60,7 @@ class Review(models.Model):
 
 # Create a Comments model to manage comments on the film reviews
 class Comment(models.Model):
+    """A model representing a comment on a film review."""
     # Create a many-to-one relationship to the Review model that deletes if
     # the film review is deleted
     review = models.ForeignKey(Review, on_delete=models.CASCADE,

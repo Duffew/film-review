@@ -18,23 +18,22 @@ from django.contrib import admin
 from django.urls import path, include
 
 # Define the URL patterns for the Django application.
-# This list contains all the URL configurations, directing requests to the 
+# This list contains all the URL configurations, directing requests to the
 # appropriate views.
 # # Order alphabetically, with empty string last, then by most detailed first
-urlpatterns = [    
+urlpatterns = [
     # Include the URL configurations for Django Allauth.
-    # This allows handling of account-related paths such as signup, login, 
+    # This allows handling of account-related paths such as signup, login,
     # logout, etc., under the 'accounts/' URL.
     path("accounts/", include("allauth.urls")),
-    # Define the URL path for the Django admin interfac. This allows access to 
+    # Define the URL path for the Django admin interfac. This allows access to
     # the Django admin site where administrators can manage the application.
     path('admin/', admin.site.urls),
     # Include the URL configurations for the django-summernote package.
-    # This allows handling of summernote-related paths, enabling the rich text 
+    # This allows handling of summernote-related paths, enabling the rich text
     # editor under the 'summernote/' URL.
     path('summernote/', include('django_summernote.urls')),
     # Include the URL configurations for the 'review' app.
     # This allows handling of review-related paths under the base URL.
     path("", include("review.urls"), name='review-urls'),
-    
 ]

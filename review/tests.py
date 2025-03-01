@@ -3,10 +3,18 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from .models import Review, Comment
 
+
+# This test class is designed to validate the functionality of the Review
+# model. It sets up a test user and a test review to ensure proper behavior
+# of the Review model, including creation, retrieval, and data verification.
 class ReviewModelTest(TestCase):
     def setUp(self):
+        # Create a test user
         self.user = User.objects.create_user(
-            username='testuser', password='testpass')
+            username='testuser', password='testpass'
+        )
+
+        # Create a test review
         self.review = Review.objects.create(
             film_title="Test Film",
             slug="test-film",
@@ -32,13 +40,21 @@ class ReviewModelTest(TestCase):
             release_year=2024
         )
         # Default status should be draft (0)
-        self.assertEqual(draft_review.status, 0)  
+        self.assertEqual(draft_review.status, 0)
 
 
+# This test class is designed to validate the functionality of the Comment
+# model. It sets up a test user, a test review, and a test comment to ensure
+# proper integration and behavior of the Comment model, including creation,
+# retrieval, and data verification.
 class CommentModelTest(TestCase):
     def setUp(self):
+        # Create a test user
         self.user = User.objects.create_user(
-            username='testuser', password='testpass')
+            username='testuser', password='testpass'
+        )
+
+        # Create a test review
         self.review = Review.objects.create(
             film_title="Test Film",
             slug="test-film",
@@ -48,11 +64,12 @@ class CommentModelTest(TestCase):
             release_year=2024,
             status=1
         )
+
+        # Create a test comment
         self.comment = Comment.objects.create(
             review=self.review,
-            author=self.user,
-            content="This is a test comment.",
-            approved=True
+            author=self.user,  # Changed from 'user' to 'author'
+            content="This is a test comment."
         )
 
     def test_comment_str(self):
@@ -61,11 +78,21 @@ class CommentModelTest(TestCase):
             str(self.comment), "testuser wrote: This is a test comment.")
 
 
+# This test class is designed to validate the functionality of the
+# Review-related views. It sets up a test client, a test user, and a test
+# review to ensure proper behavior of the views, including access, rendering,
+# and interactions with the Review model.
 class ReviewViewsTest(TestCase):
     def setUp(self):
+        # Set up the test client
         self.client = Client()
+
+        # Create a test user
         self.user = User.objects.create_user(
-            username='testuser', password='testpass')
+            username='testuser', password='testpass'
+        )
+
+        # Create a test review
         self.review = Review.objects.create(
             film_title="Test Film",
             slug="test-film",
@@ -96,14 +123,28 @@ class ReviewViewsTest(TestCase):
         self.assertContains(response, "This is a test review.")
 
 
+# This test class is designed to validate the functionality of the
+# Comment-related views. It sets up a test client, two test users, a test
+# review, and a test comment to ensure the views behave as expected, including
+# access control, rendering, and interactions with the Comment and
+# Review models.
 class CommentViewsTest(TestCase):
     def setUp(self):
+        # Set up the test client
         self.client = Client()
+
+        # Create test users
         self.user = User.objects.create_user(
-            username='testuser', password='testpass')
+            username='testuser', password='testpass'
+        )
         self.user2 = User.objects.create_user(
-            username='anotheruser', password='testpass')
+            username='anotheruser', password='testpass'
+        )
+
+        # Log in with the first test user
         self.client.login(username='testuser', password='testpass')
+
+        # Create a test review
         self.review = Review.objects.create(
             film_title="Test Film",
             slug="test-film",
@@ -113,6 +154,8 @@ class CommentViewsTest(TestCase):
             release_year=2024,
             status=1
         )
+
+        # Create a test comment
         self.comment = Comment.objects.create(
             review=self.review,
             author=self.user,
@@ -126,7 +169,7 @@ class CommentViewsTest(TestCase):
             'edit_comment', args=[self.review.slug, self.comment.id]))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'review/edit_comment.html')
-        
+
         response = self.client.post(reverse(
             'edit_comment', args=[self.review.slug, self.comment.id]), {
             'content': 'Updated comment'
@@ -139,7 +182,7 @@ class CommentViewsTest(TestCase):
         response = self.client.post(reverse(
             'delete_comment', args=[self.review.slug, self.comment.id]))
         # Redirect after deletion
-        self.assertEqual(response.status_code, 302)  
+        self.assertEqual(response.status_code, 302)
         self.assertFalse(Comment.objects.filter(id=self.comment.id).exists())
 
     def test_delete_comment_by_wrong_user(self):
@@ -149,11 +192,14 @@ class CommentViewsTest(TestCase):
         response = self.client.post(reverse(
             'delete_comment', args=[self.review.slug, self.comment.id]))
         # Redirect due to permission check
-        self.assertEqual(response.status_code, 302)  
+        self.assertEqual(response.status_code, 302)
         # Comment should not be deleted
-        self.assertTrue(Comment.objects.filter(id=self.comment.id).exists())  
+        self.assertTrue(Comment.objects.filter(id=self.comment.id).exists())
 
 
+# This test class is designed to validate URL resolution and ensure that
+# specific endpoints are correctly resolved and return the expected responses.
+# It includes tests for the home URL and the review detail URL with a slug.
 class URLResolutionTest(TestCase):
     def test_home_url_resolves(self):
         """Test that the home URL resolves correctly."""
