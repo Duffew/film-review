@@ -16,19 +16,29 @@ See below
 <html class="h-100" lang="en">
 
 <head>
-    <title>Film Review</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Title -->
+    <title>Film Review</title>
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
 
     <!-- Google Fonts CSS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
 
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -39,6 +49,7 @@ See below
  - arrange child elements in a vertical column,
  - ensure that the body takes up 100% of viewport height
 -->
+
 <body class="d-flex flex-column h-100">
 
     <!-- Navigation -->
@@ -55,7 +66,8 @@ See below
              - provide accessibilty information and that the navbar is not expanded by default
              - provide a label for screen readers
             -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <!-- Style the button with the Bootstrap class  -->
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -75,30 +87,34 @@ See below
                         'home' in the following link links back the 
                         reviews/urls.py file and the url path named 'home' 
                         -->
-                        <a class="nav-link {% if request.path == home_url %}active{% endif %}" aria-current="page" href="{% url 'home' %}">Home</a>
+                        <a class="nav-link {% if request.path == home_url %}active{% endif %}" aria-current="page"
+                            href="{% url 'home' %}">Home</a>
                     </li>
                     <!-- initial code for login, logout and signup from CI blog walkthrough -->
                     <!-- define a condtional for autenticated users -->
                     {% if user.is_authenticated %}
                     <li class="nav-item">
                         <!-- Provide a nav link to invoke Django's template variable for Log Out if logged in -->
-                        <a class="nav-link {% if request.path == logout_url %}active{% endif %}" aria-current="page" href="{% url 'account_logout' %}">Logout {{ user.first_name|default:user.username }}</a>
+                        <a class="nav-link {% if request.path == logout_url %}active{% endif %}" aria-current="page"
+                            href="{% url 'account_logout' %}">Logout {{ user.first_name|default:user.username }}</a>
                     </li>
                     {% else %}
                     <li class="nav-item">
                         <!-- Provide a nav link to invoke Django's template variable for Signup if an unregistered user -->
-                        <a class="nav-link {% if request.path == signup_url %}active{% endif %}" aria-current="page" href="{% url 'account_signup' %}">Register</a>
+                        <a class="nav-link {% if request.path == signup_url %}active{% endif %}" aria-current="page"
+                            href="{% url 'account_signup' %}">Register</a>
                     </li>
                     <li class="nav-item">
                         <!-- Provide a nav link to invoke Django's template variable for Login if not already -->
-                        <a class="nav-link {% if request.path == login_url %}active{% endif %}" aria-current="page" href="{% url 'account_login' %}">Login</a>
+                        <a class="nav-link {% if request.path == login_url %}active{% endif %}" aria-current="page"
+                            href="{% url 'account_login' %}">Login</a>
                     </li>
                     {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
-    
+
     <!-- Displaying Django messages - Credit Code Institute Django Blog -->
     <div class="container">
         <div class="row">
@@ -135,7 +151,8 @@ See below
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteModalLabel">Confirm Delete Comment</h5>
-                    <button type="button" class="btn-close custom-button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close custom-button" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     Are you sure you want to delete this comment?
@@ -152,8 +169,10 @@ See below
     </div>
 
     <!-- Bootstrap JS (standardized to Bootstrap 5) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+
     <!-- Custom JavaScript -->
     <script src="{% static 'js/script.js' %}"></script>
 </body>
